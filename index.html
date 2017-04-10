@@ -49,10 +49,16 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-12">
-          <h2>Heading</h2>
           <p>
-              How to use DocMaker
-              <!-- TODO: Add a how-to -->
+            <form onsubmit="download(this['name'].value, this['text'].value)">
+                <label>Filename</label>
+                <input type="text" name="name" placeholder="*.doc">
+                <br>
+                <label>Content</label>
+                <textarea name="text"></textarea>
+                <br>
+                <input type="submit" value="Download">
+            </form>
           </p>
         </div>
       </div>
