@@ -6,7 +6,7 @@
 
   <div class="form-group">
     <label>Title:</label>
-    <input type="text" class="form-control" id="title" ng-model="documentTitle">
+    <input type="text" class="form-control" ng-model="documentTitle">
   </div>
 
   <div class="form-group">
@@ -20,7 +20,7 @@
     <table class="table table-bordered" id="tables">
       <thead>
         <th>
-          <td><button id="addTable" class="btn btn-success btn-sm pull-right">+</button></td>
+          <td><button id="addTable" class="btn btn-success btn-sm pull-right" ng-click="addTable()">+</button></td>
         </th>
       </thead>
       <tr ng-repeat="table in tables">
@@ -30,7 +30,7 @@
             <thead>
               <tr>
                 <td colspan="3">
-                  <button class="btn btn-success btn-sm pull-right addColumn">+</button>
+                  <button class="btn btn-success btn-sm pull-right" ng-click="addColumn(table)">+</button>
                 </td>
               </tr>
             </thead>
@@ -48,7 +48,7 @@
                 </td>
                 <td>
                   <div ng-if="!column.IsMainIdentifier">
-                    <button class="btn btn-sm btn-danger pull-right">-</button>
+                    <button class="btn btn-sm btn-danger pull-right" ng-click="removeColumn(table, $index)">-</button>
                   </div>
                 </td>
               </tr>
@@ -76,7 +76,7 @@
           </table>
         </td>
         <td>
-          <button class="btn btn-sm btn-danger pull-right">-</button>
+          <button class="btn btn-sm btn-danger pull-right" ng-click="removeTable($index)">-</button>
         </td>
       </tr>
     </table>
@@ -87,7 +87,7 @@
     <table class="table table-bordered">
       <tr>
         <td>
-          <button class="btn btn-success btn-sm pull-right addQuery">+</button>
+          <button class="btn btn-success btn-sm pull-right" ng-click="addQuery()">+</button>
         </td>
       </tr>
 
@@ -97,7 +97,7 @@
             <tr>
               <td>
                 <div class="col-md-11"><input type="text" class="form-control" placeholder="Query title" ng-model="query.Title"/></div>
-                <div class="col-md-1"><button class="btn btn-sm btn-danger pull-right row-delete">-</button></div>
+                <div class="col-md-1"><button class="btn btn-sm btn-danger pull-right" ng-click="removeQuery($index)">-</button></div>
               </td>
             </tr>
             <tr>
@@ -110,5 +110,5 @@
       </tr>
     </table>
   </div>
-  <button type="submit" class="btn btn-default">Submit</button>
+  <button type="submit" class="btn btn-default" ng-click="createDocument()">Submit</button>
 </div>

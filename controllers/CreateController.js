@@ -3,36 +3,75 @@
 
   var CreateController = function($scope, $interval, $location) {
 
-    $scope.createDocument = function() {
-      $location.path("/");
+    $scope.addTable = function() {
+        $scope.tables.push({
+            Name : '',
+            Columns : [
+                {
+                    Name : '',
+                    IsMainIdentifier : true,
+                    Body : ''
+                }
+            ]
+        });
     };
 
+    $scope.removeTable = function(index) {
+        $scope.tables.splice(index, 1);
+    };
+
+    $scope.addColumn = function(table) {
+        table.Columns.push({
+            Name : '',
+            Columns : [
+                {
+                    Name: '',
+                    IsMainIdentifier: false,
+                    Body: ''
+                }
+            ]
+        });
+    };
+
+    $scope.removeColumn = function(table, index) {
+        table.Columns.splice(index, 1);
+    };
+
+    $scope.addQuery = function() {
+        $scope.queries.push({
+            Title : '',
+            Body : ''
+        });
+    };
+
+    $scope.removeQuery = function(index) {
+        $scope.queries.splice(index, 1);
+    };
+
+    $scope.createDocument = function() {
+        console.log('Creating document');
+    };
+
+    $scope.tables = [];
+    $scope.queries = [];
+
+    // TODO: Remove this summy data
     $scope.documentName = "test.doc";
     $scope.documentTitle = "Organization";
     $scope.documentIntro = "Dit is een organization die dingen doet.";
     $scope.tables = [
         {
-            Name : 'tbl_Organization',
-            Columns : [
+            Name: 'tbl_Organization',
+            Columns: [
                 {
-                    Name : 'OrganizationId',
-                    IsMainIdentifier : true,
-                    Body : ''
+                    Name: 'OrganizationId',
+                    IsMainIdentifier: true,
+                    Body: ''
                 },
                 {
-                    Name : 'Test',
-                    IsMainIdentifier : false,
-                    Body : 'Dit is een andere kolom'
-                }
-            ]
-        },
-        {
-            Name : 'tbl_Test',
-            Columns : [
-                {
-                    Name : 'TestId',
-                    IsMainIdentifier : true,
-                    Body : ''
+                    Name: 'Test',
+                    IsMainIdentifier: false,
+                    Body: 'Dit is een andere kolom'
                 }
             ]
         }
