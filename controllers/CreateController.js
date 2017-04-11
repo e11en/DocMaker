@@ -55,7 +55,7 @@
     $scope.tables = [];
     $scope.queries = [];
 
-    // TODO: Remove this summy data
+    // TODO: Remove this dummy data
     $scope.documentName = "test.doc";
     $scope.documentTitle = "Organization";
     $scope.documentIntro = "Dit is een organization die dingen doet.";
