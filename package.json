@@ -1,0 +1,17 @@
+{
+  "name": "DocMaker",
+  "version": "1.0.0",
+  "description": "A simple documentation maker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf www/* && webpack -p",
+    "devserver": "webpack-dev-server --port 9100 --progress --colors"
+  },
+  "author": "Ellen Langelaar",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
