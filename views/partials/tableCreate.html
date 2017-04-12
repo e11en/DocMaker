@@ -8,7 +8,7 @@
                 <td><button id="addTable" class="btn btn-success btn-sm pull-right" ng-click="addTable()">+</button></td>
             </th>
         </thead>
-        <tr ng-repeat="table in tables">
+        <tr ng-repeat="table in document.tables">
             <td>
                 <!-- Table Name -->
                 <input type="text" ng-model="table.Name" placeholder='Table name' class="form-control"/>
@@ -38,7 +38,7 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="column in table.Columns">
+                        <tr ng-repeat="column in document.table.Columns">
                             <!-- Column Name -->
                             <td><input type="text" ng-model="column.Name" class="form-control" placeholder="Column name"/></td>
                             <td>

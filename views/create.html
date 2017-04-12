@@ -3,22 +3,22 @@
   <!-- Document Name -->
   <div class="form-group">
     <label>Document name:</label>
-    <input type="text" class="form-control" ng-model="documentName" placeholder="*.doc">
+    <input type="text" class="form-control" ng-model="document.documentName" placeholder="*.doc">
   </div>
 
   <!-- Document Title -->
   <div class="form-group">
     <label>Title:</label>
-    <input type="text" class="form-control" ng-model="documentTitle">
+    <input type="text" class="form-control" ng-model="document.documentTitle">
   </div>
 
   <!-- Relation Overview Image -->
-  <div flow-init="{singleFile:true}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-name="documentRelationImage" class="form-group">
+  <div flow-init="{singleFile:true}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-name="document.documentRelationImage" class="form-group">
     <label>Relation overview:</label> <br>
     <span class="btn btn-primary" flow-btn>Upload Image</span>
     <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="$flow.cancel()">Cancel</span>
     <table>
-      <tr ng-repeat="image in documentRelationImage.files">
+      <tr ng-repeat="image in document.documentRelationImage.files">
         <td><img flow-img="image"/></td>
       </tr>
     </table>
@@ -27,7 +27,7 @@
   <!-- Document Intro -->
   <div class="form-group">
     <label>Intro:</label>
-    <textarea class="form-control" rows="5" ng-model="documentIntro"></textarea>
+    <textarea class="form-control" rows="5" ng-model="document.documentIntro"></textarea>
   </div>
 
   <!-- Tables Explanation -->

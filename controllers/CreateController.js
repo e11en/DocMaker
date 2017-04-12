@@ -1,10 +1,10 @@
 (function() {
   var app = angular.module("docMaker");
 
-  var CreateController = function($scope) {
+  var CreateController = function($scope, docify) {
 
     $scope.addTable = function() {
-        $scope.tables.push({
+        $scope.document.tables.push({
             Name : '',
             Image : {},
             Columns : [
@@ -20,7 +20,7 @@
     };
 
     $scope.removeTable = function(index) {
-        $scope.tables.splice(index, 1);
+        $scope.document.tables.splice(index, 1);
     };
 
     $scope.addColumn = function(table) {
@@ -41,29 +41,32 @@
     };
 
     $scope.addQuery = function() {
-        $scope.queries.push({
+        $scope.document.queries.push({
             Title : '',
             Body : ''
         });
     };
 
     $scope.removeQuery = function(index) {
-        $scope.queries.splice(index, 1);
+        $scope.document.queries.splice(index, 1);
     };
 
     $scope.createDocument = function() {
         console.log('Creating document');
+
+        docify.process($scope.document);
     };
 
-    $scope.tables = [];
-    $scope.queries = [];
-    $scope.documentRelationImage = {};
+    $scope.document = {};
+    $scope.document.tables = [];
+    $scope.document.queries = [];
+    $scope.document.documentRelationImage = {};
 
     // TODO: Remove this dummy data
-    $scope.documentName = "test.doc";
-    $scope.documentTitle = "Organization";
-    $scope.documentIntro = "Dit is een organization die dingen doet.";
-    $scope.tables = [
+    $scope.document.documentName = "test.doc";
+    $scope.document.documentTitle = "Organization";
+    $scope.document.documentIntro = "Dit is een organization die dingen doet.";
+    $scope.document.tables = [
         {
             Name: 'tbl_Organization',
             Image : {},
@@ -83,7 +86,7 @@
             HasTransStartDateColumn : true
         }
         ];
-    $scope.queries = [
+    $scope.document.queries = [
         {
             Title : 'Toon alle organizations',
             Body : 'SELECT * FROM Organization'
