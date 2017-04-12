@@ -3,6 +3,7 @@
     <table class="table table-bordered">
         <tr>
             <td>
+                <!-- Add Query -->
                 <button class="btn btn-success btn-sm pull-right" ng-click="addQuery()">+</button>
             </td>
         </tr>
@@ -12,12 +13,15 @@
                 <table class="table">
                     <tr>
                         <td>
+                            <!-- Query Title -->
                             <div class="col-md-11"><input type="text" class="form-control" placeholder="Query title" ng-model="query.Title"/></div>
+                            <!-- Remove Query -->
                             <div class="col-md-1"><button class="btn btn-sm btn-danger pull-right" ng-click="removeQuery($index)">-</button></div>
                         </td>
                     </tr>
                     <tr>
                         <td>
+                            <!-- Query Body -->
                             <div class="col-md-12"><textarea class="form-control" rows="5" placeholder="Query body" ng-model="query.Body"></textarea></div>
                         </td>
                     </tr>
