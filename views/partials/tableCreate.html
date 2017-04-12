@@ -3,63 +3,86 @@
 
     <table class="table table-bordered" id="tables">
         <thead>
-        <th>
-        <td><button id="addTable" class="btn btn-success btn-sm pull-right" ng-click="addTable()">+</button></td>
-        </th>
+            <th>
+                <!-- Add Table -->
+                <td><button id="addTable" class="btn btn-success btn-sm pull-right" ng-click="addTable()">+</button></td>
+            </th>
         </thead>
         <tr ng-repeat="table in tables">
             <td>
-                <input type="text" ng-model="table.Name" placeholder='Table name' class="form-control" value="tbl_Organization"/>
+                <!-- Table Name -->
+                <input type="text" ng-model="table.Name" placeholder='Table name' class="form-control"/>
+
                 <table class="table table-bordered">
                     <thead>
-                    <tr>
-                        <td colspan="3">
-                            <button class="btn btn-success btn-sm pull-right" ng-click="addColumn(table)">+</button>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td colspan="3">
+                                <!-- Table Image -->
+                                <div flow-init="{singleFile:true}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" class="form-group">
+                                    <span class="btn btn-primary" flow-btn>Set Image</span>
+                                    <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="$flow.cancel()">Cancel</span>
+                                    <table>
+                                        <tr ng-repeat="file in $flow.files">
+                                            <td><img flow-img="file"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <!-- Add Column -->
+                                <button class="btn btn-success btn-sm pull-right" ng-click="addColumn(table)">+</button>
+                            </td>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    <tr ng-repeat="column in table.Columns">
-                        <td><input type="text" ng-model="column.Name" class="form-control" placeholder="Column name"/></td>
-                        <td>
-                            <div ng-if="column.IsMainIdentifier">
-                                Identifier
-                            </div>
-                            <div ng-if="!column.IsMainIdentifier">
-                                <input type="text" ng-model="column.Body" class="form-control"/>
-                            </div>
-                        </td>
-                        <td>
-                            <div ng-if="!column.IsMainIdentifier">
-                                <button class="btn btn-sm btn-danger pull-right" ng-click="removeColumn(table, $index)">-</button>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr ng-repeat="column in table.Columns">
+                            <!-- Column Name -->
+                            <td><input type="text" ng-model="column.Name" class="form-control" placeholder="Column name"/></td>
+                            <td>
+                                <!-- Column Body -->
+                                <div ng-if="column.IsMainIdentifier">
+                                    Identifier
+                                </div>
+                                <div ng-if="!column.IsMainIdentifier">
+                                    <input type="text" ng-model="column.Body" class="form-control"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-if="!column.IsMainIdentifier">
+                                    <!-- Remove Column -->
+                                    <button class="btn btn-sm btn-danger pull-right" ng-click="removeColumn(table, $index)">-</button>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
 
                     <tfoot>
-                    <tr>
-                        <td colspan="3">
-                            <div class="col-md-3 col-sm-6">
-                                Has UserComment: <input type="checkbox" ng-model="table.HasUserCommentColumn"/> <br>
-                                Has UserNameModified: <input type="checkbox" ng-model="table.HasUserNameModifiedColumn"/>
-                            </div>
+                        <tr>
+                            <!-- Table Extra's -->
+                            <td colspan="3">
+                                <div class="col-md-3 col-sm-6">
+                                    Has UserComment: <input type="checkbox" ng-model="table.HasUserCommentColumn"/> <br>
+                                    Has UserNameModified: <input type="checkbox" ng-model="table.HasUserNameModifiedColumn"/>
+                                </div>
 
-                            <div class="col-md-3 col-sm-6">
-                                Has ValidStartDate: <input type="checkbox" ng-model="table.HasValidStartDateColumn"/> <br>
-                                Has ValidEndDate: <input type="checkbox" ng-model="table.HasValidEndDateColumn"/>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                Has TransStartDate: <input type="checkbox" ng-model="table.HasTransStartDateColumn"/> <br>
-                                Has history table: <input type="checkbox" ng-model="table.HasHistoryTable"/>
-                            </div>
-                        </td>
-                    </tr>
+                                <div class="col-md-3 col-sm-6">
+                                    Has ValidStartDate: <input type="checkbox" ng-model="table.HasValidStartDateColumn"/> <br>
+                                    Has ValidEndDate: <input type="checkbox" ng-model="table.HasValidEndDateColumn"/>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    Has TransStartDate: <input type="checkbox" ng-model="table.HasTransStartDateColumn"/> <br>
+                                    Has history table: <input type="checkbox" ng-model="table.HasHistoryTable"/>
+                                </div>
+                            </td>
+                        </tr>
                     </tfoot>
                 </table>
             </td>
             <td>
+                <!-- Remove Table -->
                 <button class="btn btn-sm btn-danger pull-right" ng-click="removeTable($index)">-</button>
             </td>
         </tr>
