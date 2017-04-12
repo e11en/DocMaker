@@ -10,8 +10,6 @@
   },
   "author": "Ellen Langelaar",
   "license": "MIT",
-  "dependencies": {
-  },
-  "devDependencies": {
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

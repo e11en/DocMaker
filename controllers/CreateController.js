@@ -1,7 +1,7 @@
 (function() {
   var app = angular.module("docMaker");
 
-  var CreateController = function($scope, $timeout, docify) {
+  var CreateController = function($scope, FileSaver, Blob, docify) {
 
     $scope.addTable = function() {
         $scope.document.tables.push({
@@ -52,7 +52,11 @@
     };
 
     $scope.createDocument = function() {
-        docify.process($scope.document);
+        $scope.document.dataUri = docify.process($scope.document);
+        console.log($scope.document.dataUri);
+
+        var data = new Blob([$scope.document.dataUri], { type: 'text/html;charset=utf-8' });
+        FileSaver.saveAs(data, 'export.doc');
     };
 
       /***
