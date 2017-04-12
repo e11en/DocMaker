@@ -1,9 +1,9 @@
 # DocMaker
-An easy docs creator for markdown.
+An easy docs creator.
 
-- [ ] Relatie vast stellen (plaatje uploaden)
-- [ ] Algemene text invoeren
-- [ ] Tabellen defineren (+ plaatje uploaden)
+- [x] Relatie vast stellen (plaatje uploaden)
+- [x] Algemene text invoeren
+- [x] Tabellen defineren (+ plaatje uploaden)
 - [ ] Aanvinken main identifier
 - [ ] Koppeling maken met andere tabel
 - [ ] Auto text voor userNameModified, ValidStartDate etc.
