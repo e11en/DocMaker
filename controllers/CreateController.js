@@ -56,6 +56,7 @@
 
     $scope.tables = [];
     $scope.queries = [];
+    $scope.documentRelationImage = {};
 
     // TODO: Remove this dummy data
     $scope.documentName = "test.doc";
@@ -63,7 +64,7 @@
     $scope.documentIntro = "Dit is een organization die dingen doet.";
     $scope.tables = [
         {
-            Image : '',
+            Image : {},
             Name: 'tbl_Organization',
             Columns: [
                 {
