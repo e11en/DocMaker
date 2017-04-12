@@ -2,8 +2,8 @@
 <html ng-app="docMaker">
 
   <head>
-    <link rel="stylesheet" href="assets/style.css" />
     <link rel="stylesheet" href="assets/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/style.css" />
   </head>
 
   <body>
@@ -25,14 +25,18 @@
       </footer>
     </div>
 
+    <!-- Assets -->
     <script src="assets/jquery-2.2.4.min.js"></script>
     <script src="assets/bootstrap.min.js"></script>
     <script data-require="angular.js@*" data-semver="1.5.8" src="https://code.angularjs.org/1.5.8/angular.js"></script>
     <script data-require="angular-route@*" data-semver="1.5.8" src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
     <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
+
+    <!-- App -->
     <script src="app.js"></script>
     <script src="controllers/CreateController.js"></script>
-    
+    <script src="services/Docify.js"></script>
+
   </body>
 
 </html>
