@@ -55,6 +55,12 @@
         docify.process($scope.document);
     };
 
+      /***
+       * Puts the base64 string in the correct variable
+       * and makes sure the $scope is updated.
+       * @param file
+       * @param table (optional)
+       */
     $scope.processImage = function(file, table) {
         var fileReader = new FileReader();
         fileReader.onload = function (event) {
@@ -66,11 +72,15 @@
                     table.Image = uri;
                 }
             });
-
         };
         fileReader.readAsDataURL(file.file);
     };
 
+      /***
+       * Calls the cancel on $flow and set the variable to empty.
+       * @param flow
+       * @param table (optional)
+       */
     $scope.removeImage = function(flow, table) {
         flow.cancel();
         if(!table) {
