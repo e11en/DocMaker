@@ -18,14 +18,15 @@
                         <tr>
                             <td colspan="3">
                                 <!-- Table Image -->
-                                <div flow-init="{singleFile:true}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-name="table.Image" class="form-group">
+                                <div flow-init="{singleFile:true}"
+                                     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+                                     flow-name="images.tables"
+                                     flow-files-added="processImage($files[0], table)"
+                                     class="form-group">
                                     <span class="btn btn-primary" flow-btn>Set Image</span>
-                                    <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="$flow.cancel()">Cancel</span>
-                                    <table>
-                                        <tr ng-repeat="image in table.Image.files">
-                                            <td><img flow-img="image"/></td>
-                                        </tr>
-                                    </table>
+                                    <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="removeImage($flow, table)">Cancel</span>
+                                    <br>
+                                    <img class="table-image" ng-show="table.Image" ng-src="{{table.Image || '//:0' }}"/>
                                 </div>
                             </td>
                         </tr>

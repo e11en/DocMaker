@@ -13,15 +13,16 @@
   </div>
 
   <!-- Relation Overview Image -->
-  <div flow-init="{singleFile:true}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-name="document.documentRelationImage" class="form-group">
+  <div flow-init="{singleFile:true}"
+       flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+       flow-name="images.main"
+       flow-files-added="processImage($files[0])"
+       class="form-group">
     <label>Relation overview:</label> <br>
     <span class="btn btn-primary" flow-btn>Upload Image</span>
-    <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="$flow.cancel()">Cancel</span>
-    <table>
-      <tr ng-repeat="image in document.documentRelationImage.files">
-        <td><img flow-img="image"/></td>
-      </tr>
-    </table>
+    <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="removeImage($flow)">Cancel</span>
+    <br>
+    <img ng-show="document.documentRelationImage"  ng-src="{{ document.documentRelationImage || '//:0' }}"/>
   </div>
 
   <!-- Document Intro -->

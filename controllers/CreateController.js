@@ -1,12 +1,12 @@
 (function() {
   var app = angular.module("docMaker");
 
-  var CreateController = function($scope, docify) {
+  var CreateController = function($scope, $timeout, docify) {
 
     $scope.addTable = function() {
         $scope.document.tables.push({
             Name : '',
-            Image : {},
+            Image : '',
             Columns : [
                 {
                     Name : '',
@@ -52,15 +52,38 @@
     };
 
     $scope.createDocument = function() {
-        console.log('Creating document');
-
         docify.process($scope.document);
+    };
+
+    $scope.processImage = function(file, table) {
+        var fileReader = new FileReader();
+        fileReader.onload = function (event) {
+            var uri = event.target.result;
+            $scope.$apply(function(){
+                if(!table) {
+                    $scope.document.documentRelationImage = uri;
+                } else {
+                    table.Image = uri;
+                }
+            });
+
+        };
+        fileReader.readAsDataURL(file.file);
+    };
+
+    $scope.removeImage = function(flow, table) {
+        flow.cancel();
+        if(!table) {
+            $scope.document.documentRelationImage = '';
+        } else {
+            table.Image = '';
+        }
     };
 
     $scope.document = {};
     $scope.document.tables = [];
     $scope.document.queries = [];
-    $scope.document.documentRelationImage = {};
+    $scope.document.documentRelationImage = '';
 
     // TODO: Remove this dummy data
     $scope.document.documentName = "test.doc";
@@ -69,7 +92,7 @@
     $scope.document.tables = [
         {
             Name: 'tbl_Organization',
-            Image : {},
+            Image : '',
             Columns: [
                 {
                     Name: 'OrganizationId',

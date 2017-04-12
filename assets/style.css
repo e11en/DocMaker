@@ -1,2 +1,7 @@
-/* Styles go here */
+img {
+    max-width: 940px;
+}
 
+.table-image {
+    max-width: 300px;
+}
