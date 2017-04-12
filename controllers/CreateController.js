@@ -6,6 +6,7 @@
     $scope.addTable = function() {
         $scope.tables.push({
             Name : '',
+            Image : {},
             Columns : [
                 {
                     Name : '',
@@ -64,8 +65,8 @@
     $scope.documentIntro = "Dit is een organization die dingen doet.";
     $scope.tables = [
         {
-            Image : {},
             Name: 'tbl_Organization',
+            Image : {},
             Columns: [
                 {
                     Name: 'OrganizationId',
