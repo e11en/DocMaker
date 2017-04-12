@@ -1,7 +1,7 @@
 (function() {
-  var app = angular.module("githubViewer");
+  var app = angular.module("docMaker");
 
-  var CreateController = function($scope, $interval, $location) {
+  var CreateController = function($scope) {
 
     $scope.addTable = function() {
         $scope.tables.push({
@@ -12,7 +12,9 @@
                     IsMainIdentifier : true,
                     Body : ''
                 }
-            ]
+            ],
+            HasUserNameModifiedColumn : true,
+            HasTransStartDateColumn : true
         });
     };
 
@@ -61,6 +63,7 @@
     $scope.documentIntro = "Dit is een organization die dingen doet.";
     $scope.tables = [
         {
+            Image : '',
             Name: 'tbl_Organization',
             Columns: [
                 {
@@ -73,7 +76,9 @@
                     IsMainIdentifier: false,
                     Body: 'Dit is een andere kolom'
                 }
-            ]
+            ],
+            HasUserNameModifiedColumn : true,
+            HasTransStartDateColumn : true
         }
         ];
     $scope.queries = [

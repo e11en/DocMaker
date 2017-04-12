@@ -1,0 +1,67 @@
+<div class="form-group">
+    <label>Tables:</label>
+
+    <table class="table table-bordered" id="tables">
+        <thead>
+        <th>
+        <td><button id="addTable" class="btn btn-success btn-sm pull-right" ng-click="addTable()">+</button></td>
+        </th>
+        </thead>
+        <tr ng-repeat="table in tables">
+            <td>
+                <input type="text" ng-model="table.Name" placeholder='Table name' class="form-control" value="tbl_Organization"/>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td colspan="3">
+                            <button class="btn btn-success btn-sm pull-right" ng-click="addColumn(table)">+</button>
+                        </td>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="column in table.Columns">
+                        <td><input type="text" ng-model="column.Name" class="form-control" placeholder="Column name"/></td>
+                        <td>
+                            <div ng-if="column.IsMainIdentifier">
+                                Identifier
+                            </div>
+                            <div ng-if="!column.IsMainIdentifier">
+                                <input type="text" ng-model="column.Body" class="form-control"/>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="!column.IsMainIdentifier">
+                                <button class="btn btn-sm btn-danger pull-right" ng-click="removeColumn(table, $index)">-</button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    <tfoot>
+                    <tr>
+                        <td colspan="3">
+                            <div class="col-md-3 col-sm-6">
+                                Has UserComment: <input type="checkbox" ng-model="table.HasUserCommentColumn"/> <br>
+                                Has UserNameModified: <input type="checkbox" ng-model="table.HasUserNameModifiedColumn"/>
+                            </div>
+
+                            <div class="col-md-3 col-sm-6">
+                                Has ValidStartDate: <input type="checkbox" ng-model="table.HasValidStartDateColumn"/> <br>
+                                Has ValidEndDate: <input type="checkbox" ng-model="table.HasValidEndDateColumn"/>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                Has TransStartDate: <input type="checkbox" ng-model="table.HasTransStartDateColumn"/> <br>
+                                Has history table: <input type="checkbox" ng-model="table.HasHistoryTable"/>
+                            </div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-danger pull-right" ng-click="removeTable($index)">-</button>
+            </td>
+        </tr>
+    </table>
+</div>

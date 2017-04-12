@@ -1,0 +1,21 @@
+{
+  "name": "DocMaker",
+  "description": "A simple documentation maker",
+  "main": "app.js",
+  "authors": [
+    "Ellen Langelaar"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/e11en/DocMaker",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ng-flow": "~2"
+  }
+}
