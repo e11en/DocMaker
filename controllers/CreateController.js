@@ -55,8 +55,7 @@
         $scope.document.dataUri = docify.process($scope.document);
         console.log($scope.document.dataUri);
 
-        var data = new Blob([$scope.document.dataUri], { type: 'text/html;charset=utf-8' });
-        FileSaver.saveAs(data, 'export.doc');
+        // TODO: AJAX call to web api https://github.com/e11en/Html2Word
     };
 
       /***
