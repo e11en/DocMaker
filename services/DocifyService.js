@@ -28,9 +28,8 @@
         };
 
         buildBase = function() {
-            var html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">';
+            var html = '<html>';
             html += '<head>';
-            html += '<xml><word:WordDocument><word:View>Print</word:View><word:Zoom>90</word:Zoom><word:DoNotOptimizeForBrowser/></word:WordDocument></xml>';
             html += '</head>';
             html += '<body>';
             addToDocument(html);
