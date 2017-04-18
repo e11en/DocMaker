@@ -61,10 +61,6 @@
 
                 tablesHtml += buildPresetColumns(table);
 
-                if(table.HasHistoryTable){
-                    tablesHtml += buildHistoryTableText(table.Name);
-                }
-
                 tablesHtml += '</table>';
             }, null);
 
@@ -98,6 +94,9 @@
                 columnHtml += '<tr><td><p class="column-name">ValidEndDate</p><p class="column-body">Eind datum waarop het record invalide is.</p></td></tr>';
             if(table.HasTransStartDateColumn)
                 columnHtml += '<tr><td><p class="column-name">TransStartDate</p><p class="column-body">De datum wanneer het record voor het laatst is gewijzigd.</p></td></tr>';
+            if(table.HasHistoryTable){
+                columnHtml += buildHistoryTableText(table.Name);
+            }
 
             return columnHtml;
         };
@@ -120,6 +119,9 @@
                 amountOfColomns++;
             if(table.HasTransStartDateColumn)
                 amountOfColomns++;
+            if(table.HasHistoryTable)
+                amountOfColomns--;
+
 
             return amountOfColomns + 1;
         };
