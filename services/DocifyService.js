@@ -54,10 +54,9 @@
                 tablesHtml += '<table border="1">';
                 tablesHtml += '<tr>';
                 tablesHtml += '<td rowspan="' + getAmountOfColumns(table) +'"><img src="' + table.Image + '"/></td>';
-                tablesHtml += '</tr>';
 
                 angular.forEach(table.Columns, function(column, key) {
-                    tablesHtml += buildColumn(column);
+                    tablesHtml += buildColumn(column, key === 0);
                 }, null);
 
                 tablesHtml += buildPresetColumns(table);
@@ -72,8 +71,9 @@
             addToDocument([header, tablesHtml]);
         };
 
-        buildColumn = function(column) {
-            var columnHtml = '<tr><td>';
+        buildColumn = function(column, isFirstColumn) {
+            var columnHtml = isFirstColumn ? '' : '<tr>';
+            columnHtml += '<td>';
             columnHtml += '<p class="column-name">' + column.Name + '</p>';
             columnHtml += '<p class="column-body">';
             if(column.IsMainIdentifier) {
@@ -82,8 +82,7 @@
             else {
                 columnHtml += column.Body;
             }
-            columnHtml += '</p>';
-            columnHtml += '</td></tr>';
+            columnHtml += '</p></td></tr>';
             return columnHtml;
         };
 
