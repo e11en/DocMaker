@@ -104,7 +104,6 @@
     $scope.document.documentRelationImage = '';
 
     // TODO: Remove this dummy data
-    $scope.document.documentName = "test.doc";
     $scope.document.documentTitle = "Organization";
     $scope.document.documentIntro = "Dit is een organization die dingen doet.";
     $scope.document.tables = [
