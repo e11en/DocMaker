@@ -283,7 +283,7 @@
          * @returns {*}
          */
         replaceWordsInString = function(string, words) {
-            angular.forEach(words, function(word, key) {
+            angular.forEach(words, function(word) {
                 string = replaceSqlWordWithUpperCase(string, word);
             }, null);
 

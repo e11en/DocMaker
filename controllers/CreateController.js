@@ -55,13 +55,13 @@
         $scope.document.dataUri = docify.process($scope.document);
         console.log($scope.document.dataUri);
 
-        // $http.post("http://localhost:57982/api/document/generate",
-        //     { Html : $scope.document.dataUri })
-        //     .then(function success(response) {
-        //         //window.open(response.data);
-        //     }, function error(response) {
-        //         console.log("ERROR! " + response.statusText);
-        //     });
+        $http.post("http://localhost:57982/api/document/generate",
+            { Html : $scope.document.dataUri })
+            .then(function success(response) {
+                //window.open(response.data);
+            }, function error(response) {
+                console.log("ERROR! " + response.statusText);
+            });
     };
 
       /***
