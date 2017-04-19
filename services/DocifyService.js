@@ -19,7 +19,6 @@
             buildTables(docObject.tables);
             buildQueries(docObject.queries);
 
-            buildJSLibraries();
             documentHtml += '</body></html>';
 
             return documentHtml;
@@ -50,15 +49,6 @@
             html += '</head>';
             html += '<body>';
             addToDocument(html);
-        };
-
-        /**
-         * Add JS libraries, either third-party or own
-         */
-        buildJSLibraries = function() {
-            var libs = '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>';
-            libs += '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-sql.min.js"></script>';
-            addToDocument(libs);
         };
 
         /**
