@@ -11,7 +11,9 @@
             buildHeader(docObject.documentTitle);
             buildGeneralInfo(docObject.documentRelationImage, docObject.documentIntro);
             buildTables(docObject.tables);
+            buildQueries(docObject.queries);
 
+            buildJSLibraries();
             documentHtml += '</body></html>';
 
             return documentHtml;
@@ -30,9 +32,34 @@
         buildBase = function() {
             var html = '<html>';
             html += '<head>';
+            html += getStyleLibraries();
+            html += getStyles();
             html += '</head>';
             html += '<body>';
             addToDocument(html);
+        };
+
+        buildJSLibraries = function() {
+            var libs = '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>';
+            libs += '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-sql.min.js"></script>';
+            addToDocument(libs);
+        };
+
+        getStyleLibraries = function() {
+            var libs = '';
+            libs += '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">';
+            return libs;
+        };
+
+        getStyles = function() {
+            var style = '<style>';
+            style += '* { font-family: "Arial"; font-size: 10pt; }';
+            style += 'table { border-collapse: collapse; }';
+            style += '.column-name { text-decoration: underline; }';
+            style += ':not(pre)>code[class*=language-], pre[class*=language-] { background: none; }';
+            style += '.language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url { background: none; }';
+            style += '</style>';
+            return style;
         };
 
         buildHeader = function(documentTitle) {
@@ -41,7 +68,7 @@
 
         buildGeneralInfo = function(relationImage, documentIntro){
             var header = '<h2>Algemeen</h2>';
-            var image = '<img src="' + relationImage +'"/>';
+            var image = '<img src="' + relationImage +'" />';
             var intro = '<p>' + documentIntro +'</p>';
             addToDocument([header, image, intro]);
         };
@@ -122,10 +149,42 @@
             if(table.HasHistoryTable)
                 amountOfColomns--;
 
-
             return amountOfColomns + 1;
         };
 
+        buildQueries = function(queries) {
+            var header = '<h2>Handige SQL query\'s</h2>';
+            var queryHtml = '';
+            angular.forEach(queries, function(query, key) {
+                queryHtml += '<h3>' + query.Title +'</h3>';
+                queryHtml += '<table border="1">';
+                queryHtml += '<tr>';
+                queryHtml += '<td><pre><code class="language-sql">' + processSQL(query.Body) + '</code></pre></td>';
+                queryHtml += '</table>';
+            }, null);
+
+            addToDocument([header, queryHtml]);
+        };
+
+        /**
+         * Makes sure all the SQL keywords are capitalized
+         * @param sql
+         * @returns {string}
+         */
+        processSQL = function(sql) {
+            sql = sql.replace(/\band\b/ig, 'AND');
+            sql = sql.replace(/\bdatetime\b/ig, 'DATETIME');
+            sql = sql.replace(/\bdeclare\b/ig, 'DECLARE');
+            sql = sql.replace(/\bfrom\b/ig, 'FROM');
+            sql = sql.replace(/\bgetdate\b/ig, 'GETDATE');
+            sql = sql.replace(/\bint\b/ig, 'INT');
+            sql = sql.replace(/\bjoin\b/ig, 'JOIN');
+            sql = sql.replace(/\bon\b/ig, 'ON');
+            sql = sql.replace(/select/ig, 'SELECT');
+            sql = sql.replace(/\bwhere\b/ig, 'WHERE');
+
+            return sql;
+        };
 
     };
     app.service('docify', DocifyService);
