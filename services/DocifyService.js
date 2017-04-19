@@ -67,7 +67,7 @@
          */
         getStyleLibraries = function() {
             var libs = '';
-            libs += '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">';
+            libs += '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css"/>';
             return libs;
         };
 
@@ -220,10 +220,9 @@
             var queryHtml = '';
             angular.forEach(queries, function(query, key) {
                 queryHtml += '<h3>' + query.Title +'</h3>';
-                queryHtml += '<table border="1">';
-                queryHtml += '<tr>';
+                queryHtml += '<table border="1"><tr>';
                 queryHtml += '<td><pre><code class="language-sql">' + processSQL(query.Body) + '</code></pre></td>';
-                queryHtml += '</table>';
+                queryHtml += '</tr></table>';
             }, null);
 
             addToDocument([header, queryHtml]);
@@ -235,44 +234,80 @@
          * @returns {string}
          */
         processSQL = function(sql) {
-            sql = sql.replace(/\band\b/ig, 'AND');
-            sql = sql.replace(/\bas\b/ig, 'AS');
-            sql = sql.replace(/\bany\b/ig, 'ANY');
-            sql = sql.replace(/\ball\b/ig, 'ALL');
-            sql = sql.replace(/\bbetween\b/ig, 'BETWEEN');
-            sql = sql.replace(/\bcount\b/ig, 'COUNT');
-            sql = sql.replace(/\bdatetime\b/ig, 'DATETIME');
-            sql = sql.replace(/\bdeclare\b/ig, 'DECLARE');
-            sql = sql.replace(/\bdelete\b/ig, 'DELETE');
-            sql = sql.replace(/\bdistinct\b/ig, 'DISTINCT');
-            sql = sql.replace(/\bexists\b/ig, 'EXISTS');
-            sql = sql.replace(/\bfrom\b/ig, 'FROM');
-            sql = sql.replace(/\bfull\b/ig, 'FULL');
-            sql = sql.replace(/\bgetdate\b/ig, 'GETDATE');
-            sql = sql.replace(/\bgroup by\b/ig, 'GROUP BY');
-            sql = sql.replace(/\bhaving\b/ig, 'HAVING');
-            sql = sql.replace(/\binto\b/ig, 'INTO');
-            sql = sql.replace(/\bint\b/ig, 'INT');
-            sql = sql.replace(/\bin\b/ig, 'IN');
-            sql = sql.replace(/\binner join\b/ig, 'INNER JOIN');
-            sql = sql.replace(/\bjoin\b/ig, 'JOIN');
-            sql = sql.replace(/\bleft join\b/ig, 'LEFT JOIN');
-            sql = sql.replace(/\bmin\b/ig, 'MIN');
-            sql = sql.replace(/\bmax\b/ig, 'MAX');
-            sql = sql.replace(/\bnot\b/ig, 'NOT');
-            sql = sql.replace(/\bnull\b/ig, 'NULL');
-            sql = sql.replace(/\bon\b/ig, 'ON');
-            sql = sql.replace(/\bor\b/ig, 'OR');
-            sql = sql.replace(/\bouter\b/ig, 'OUTER');
-            sql = sql.replace(/\bupdate\b/ig, 'UPDATE');
-            sql = sql.replace(/\border by\b/ig, 'ORDER BY');
-            sql = sql.replace(/\bselect\b/ig, 'SELECT');
-            sql = sql.replace(/\btop\b/ig, 'TOP');
-            sql = sql.replace(/\bright join\b/ig, 'RIGHT JOIN');
-            sql = sql.replace(/\bunion\b/ig, 'UNION');
-            sql = sql.replace(/\bwhere\b/ig, 'WHERE');
+            sql = replaceWordsInString(sql, [
+                'AND',
+                'AS',
+                'ANY',
+                'ALL',
+                'BETWEEN',
+                'COUNT',
+                'DATETIME',
+                'DECLARE',
+                'DELETE',
+                'DISTINCT',
+                'EXISTS',
+                'FROM',
+                'FULL',
+                'GETDATE',
+                'GROUP BY',
+                'HAVING',
+                'INTO',
+                'INT',
+                'IN',
+                'INNER JOIN',
+                'JOIN',
+                'LEFT JOIN',
+                'MIN',
+                'MAX',
+                'NOT',
+                'NULL',
+                'ON',
+                'OR',
+                'OUTER',
+                'UPDATE',
+                'ORDER BY',
+                'SELECT',
+                'TOP',
+                'RIGHT JOIN',
+                'UNION',
+                'WHERE'
+            ]);
 
             return sql;
+        };
+
+        /**
+         * Replace the given words in the string.
+         * @param string
+         * @param words
+         * @returns {*}
+         */
+        replaceWordsInString = function(string, words) {
+            angular.forEach(words, function(word, key) {
+                string = replaceSqlWordWithUpperCase(string, word);
+            }, null);
+
+            return string;
+        };
+
+        /**
+         * Replace a word in a string including the sql wrapper.
+         * @param string
+         * @param word
+         * @returns {*|void|XML}
+         */
+        replaceSqlWordWithUpperCase = function(string, word) {
+            var regExp = new RegExp('\\b' + word + '\\b', 'gi');
+            return string.replace(regExp, wrapSql(word));
+        };
+
+        /**
+         * Get the wrapper for SQL keywords.
+         * @param word
+         * @returns {string}
+         */
+        wrapSql = function(word) {
+          return '<span class="token keyword">' + word + '</span>';
         };
 
     };
