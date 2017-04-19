@@ -173,14 +173,40 @@
          */
         processSQL = function(sql) {
             sql = sql.replace(/\band\b/ig, 'AND');
+            sql = sql.replace(/\bas\b/ig, 'AS');
+            sql = sql.replace(/\bany\b/ig, 'ANY');
+            sql = sql.replace(/\ball\b/ig, 'ALL');
+            sql = sql.replace(/\bbetween\b/ig, 'BETWEEN');
+            sql = sql.replace(/\bcount\b/ig, 'COUNT');
             sql = sql.replace(/\bdatetime\b/ig, 'DATETIME');
             sql = sql.replace(/\bdeclare\b/ig, 'DECLARE');
+            sql = sql.replace(/\bdelete\b/ig, 'DELETE');
+            sql = sql.replace(/\bdistinct\b/ig, 'DISTINCT');
+            sql = sql.replace(/\bexists\b/ig, 'EXISTS');
             sql = sql.replace(/\bfrom\b/ig, 'FROM');
+            sql = sql.replace(/\bfull\b/ig, 'FULL');
             sql = sql.replace(/\bgetdate\b/ig, 'GETDATE');
+            sql = sql.replace(/\bgroup by\b/ig, 'GROUP BY');
+            sql = sql.replace(/\bhaving\b/ig, 'HAVING');
+            sql = sql.replace(/\binto\b/ig, 'INTO');
             sql = sql.replace(/\bint\b/ig, 'INT');
+            sql = sql.replace(/\bin\b/ig, 'IN');
+            sql = sql.replace(/\binner join\b/ig, 'INNER JOIN');
             sql = sql.replace(/\bjoin\b/ig, 'JOIN');
+            sql = sql.replace(/\bleft join\b/ig, 'LEFT JOIN');
+            sql = sql.replace(/\bmin\b/ig, 'MIN');
+            sql = sql.replace(/\bmax\b/ig, 'MAX');
+            sql = sql.replace(/\bnot\b/ig, 'NOT');
+            sql = sql.replace(/\bnull\b/ig, 'NULL');
             sql = sql.replace(/\bon\b/ig, 'ON');
-            sql = sql.replace(/select/ig, 'SELECT');
+            sql = sql.replace(/\bor\b/ig, 'OR');
+            sql = sql.replace(/\bouter\b/ig, 'OUTER');
+            sql = sql.replace(/\bupdate\b/ig, 'UPDATE');
+            sql = sql.replace(/\border by\b/ig, 'ORDER BY');
+            sql = sql.replace(/\bselect\b/ig, 'SELECT');
+            sql = sql.replace(/\btop\b/ig, 'TOP');
+            sql = sql.replace(/\bright join\b/ig, 'RIGHT JOIN');
+            sql = sql.replace(/\bunion\b/ig, 'UNION');
             sql = sql.replace(/\bwhere\b/ig, 'WHERE');
 
             return sql;
