@@ -1,7 +1,7 @@
 (function() {
   var app = angular.module("docMaker");
 
-  var CreateController = function($scope, $http, FileSaver, Blob, docify) {
+  var CreateController = function($scope, $http, FileSaver, Blob, markdownify) {
 
     $scope.addTable = function() {
         $scope.document.tables.push({
@@ -52,16 +52,17 @@
     };
 
     $scope.createDocument = function() {
-        $scope.document.dataUri = docify.process($scope.document);
+        $scope.document.dataUri = markdownify.process($scope.document);
         console.log($scope.document.dataUri);
-
-        $http.post("http://localhost:57982/api/document/generate",
-            { Html : $scope.document.dataUri })
-            .then(function success(response) {
-                //window.open(response.data);
-            }, function error(response) {
-                console.log("ERROR! " + response.statusText);
-            });
+        // console.log($scope.document.dataUri);
+        //
+        // $http.post("http://localhost:57982/api/document/generate",
+        //     { Html : $scope.document.dataUri })
+        //     .then(function success(response) {
+        //         //window.open(response.data);
+        //     }, function error(response) {
+        //         console.log("ERROR! " + response.statusText);
+        //     });
     };
 
       /***
