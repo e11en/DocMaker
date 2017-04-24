@@ -52,8 +52,10 @@
     };
 
     $scope.createDocument = function() {
-        $scope.document.dataUri = markdownify.process($scope.document);
-        console.log($scope.document.dataUri);
+        $scope.document.output = markdownify.process($scope.document);
+        console.log($scope.document.output);
+
+        saveFile($scope.document.output, $scope.document.documentTitle.toLowerCase() + '.md');
         // console.log($scope.document.dataUri);
         //
         // $http.post("http://localhost:57982/api/document/generate",
@@ -63,6 +65,11 @@
         //     }, function error(response) {
         //         console.log("ERROR! " + response.statusText);
         //     });
+    };
+
+    saveFile = function(content, outputFile) {
+        var blob = new Blob([content], {type: 'text/plain'});
+        FileSaver.saveAs(blob, outputFile);
     };
 
       /***
