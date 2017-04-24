@@ -50,7 +50,7 @@
          */
         buildGeneralInfo = function(relationImage, documentIntro){
             var header = '<h2>Algemeen</h2>';
-            var image = '<img src="' + relationImage +'" />';
+            var image = '<img class="header-img" src="' + relationImage +'" />';
             var intro = '<p>' + documentIntro +'</p>';
             addToDocument([header, image, intro]);
         };
