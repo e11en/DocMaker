@@ -11,8 +11,6 @@
          * @returns {string}
          */
         this.process = function(docObject) {
-            console.log('Creating document');
-
             buildBase();
             buildHeader(docObject.documentTitle);
             buildGeneralInfo(docObject.documentRelationImage, docObject.documentIntro);
