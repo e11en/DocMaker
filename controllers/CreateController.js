@@ -52,8 +52,6 @@
     };
 
     $scope.downloadDocument = function(type) {
-        // TODO: Do validation
-
         switch(type) {
             case 'word' :
                 downloadWordDocument();
@@ -81,11 +79,11 @@
             });
     };
 
-      /**
-       * Concat the name with dashes and add the .md extension.
-       * @param fileName
-       * @returns {string}
-       */
+    /**
+      * Concat the name with dashes and add the .md extension.
+      * @param fileName
+      * @returns {string}
+      */
     getMdFileName = function(fileName) {
         return fileName.toLowerCase().replace(/\s+/g,"-") + '.md';
     };

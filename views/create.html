@@ -1,35 +1,37 @@
-<div class="col-md-12" id="createDocumentWrapper">
-  <!-- Document Title -->
-  <div class="form-group">
-    <label>Title:</label>
-    <input type="text" class="form-control" ng-model="document.documentTitle">
+<form name="documentForm" novalidate>
+  <div class="col-md-12" id="createDocumentWrapper">
+    <!-- Document Title -->
+    <div class="form-group">
+      <label>Title:</label>
+      <input type="text" class="form-control" ng-model="document.documentTitle" ng-required="true" name="documentTitle">
+    </div>
+
+    <!-- Relation Overview Image -->
+    <div flow-init="{singleFile:true}"
+         flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+         flow-name="images.main"
+         flow-files-added="processImage($files[0])"
+         class="form-group">
+      <label>Relation overview:</label> <br>
+      <span class="btn btn-primary" flow-btn>Upload Image</span>
+      <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="removeImage($flow)">Cancel</span>
+      <br>
+      <img ng-show="document.documentRelationImage"  ng-src="{{ document.documentRelationImage || '//:0' }}"/>
+    </div>
+
+    <!-- Document Intro -->
+    <div class="form-group">
+      <label>Intro:</label>
+      <textarea class="form-control" rows="5" ng-model="document.documentIntro" ng-required="true"></textarea>
+    </div>
+
+    <!-- Tables Explanation -->
+    <div ng-include="'views/partials/tableCreate.html'"></div>
+
+    <!-- Handy Queries -->
+    <div ng-include="'views/partials/queryCreate.html'"></div>
+
+    <button class="btn btn-default pull-left" ng-disabled="documentForm.$invalid" ng-click="downloadDocument('word')">Download Word</button>
+    <button class="btn btn-primary pull-right" ng-disabled="documentForm.$invalid" ng-click="downloadDocument('markdown')">Download MarkDown</button>
   </div>
-
-  <!-- Relation Overview Image -->
-  <div flow-init="{singleFile:true}"
-       flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-       flow-name="images.main"
-       flow-files-added="processImage($files[0])"
-       class="form-group">
-    <label>Relation overview:</label> <br>
-    <span class="btn btn-primary" flow-btn>Upload Image</span>
-    <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="removeImage($flow)">Cancel</span>
-    <br>
-    <img ng-show="document.documentRelationImage"  ng-src="{{ document.documentRelationImage || '//:0' }}"/>
-  </div>
-
-  <!-- Document Intro -->
-  <div class="form-group">
-    <label>Intro:</label>
-    <textarea class="form-control" rows="5" ng-model="document.documentIntro"></textarea>
-  </div>
-
-  <!-- Tables Explanation -->
-  <div ng-include="'views/partials/tableCreate.html'"></div>
-
-  <!-- Handy Queries -->
-  <div ng-include="'views/partials/queryCreate.html'"></div>
-
-  <button type="submit" class="btn btn-default pull-left" ng-click="downloadDocument('word')">Download Word</button>
-  <button type="submit" class="btn btn-primary pull-right" ng-click="downloadDocument('markdown')">Download MarkDown</button>
-</div>
+</form>
