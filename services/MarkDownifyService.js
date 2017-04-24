@@ -230,7 +230,6 @@
             sql = styleSqlWord(sql, '[0-9][0-9]*', 'number');
             // Define the comments
             //sql = styleSqlWord(sql, '\/\*(.*?)\*\/', 'comment'); // Turned off because it slows down the process too much
-            console.log(sql);
 
             return sql;
         };
@@ -270,10 +269,7 @@
         styleSqlWord = function(string, regexp, type) {
             // Get all words that match the regexp
             var matches = string.match(new RegExp(regexp, 'gi'));
-            console.log(matches);
             angular.forEach(matches, function(word) {
-                console.log(word);
-
                 // Escape the word so it will not interfere with the regexp
                 var wordEscaped = word.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 
