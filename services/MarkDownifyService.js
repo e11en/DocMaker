@@ -39,7 +39,7 @@
          * Create the markdown header.
          */
         buildBase = function(title) {
-            var base = '+++\r\ndate = "' + new Date().toISOString() + '"\r\ntitle = ' + title + '\r\ndraft = false\r\n\r\n+++\r\n';
+            var base = '+++\r\ndate = "' + new Date().toISOString() + '"\r\ntitle = "' + title + '"\r\ndraft = false\r\n\r\n+++\r\n';
             addToDocument(base);
         };
 
@@ -170,11 +170,129 @@
             angular.forEach(queries, function(query, key) {
                 result += '<h3>' + query.Title +'</h3>';
                 result += '<table border="1"><tr>';
-                result += '<td><pre><code class="language-sql">' + query.Body + '</code></pre></td>';
+                result += '<td><pre><code class="language-sql">' + processSQL(query.Body) + '</code></pre></td>';
                 result += '</tr></table>';
             }, null);
 
             addToDocument([header, result]);
+        };
+
+        /**
+         * Makes sure all the SQL keywords are capitalized
+         * @param sql
+         * @returns {string}
+         */
+        processSQL = function(sql) {
+            sql = replaceWordsInString(sql, [
+                'AND',
+                'AS',
+                'ANY',
+                'ALL',
+                'BETWEEN',
+                'COUNT',
+                'DATETIME',
+                'DECLARE',
+                'DELETE',
+                'DISTINCT',
+                'EXISTS',
+                'FROM',
+                'FULL',
+                'GETDATE',
+                'GROUP BY',
+                'HAVING',
+                'INTO',
+                'INT',
+                'IN',
+                'INNER JOIN',
+                'JOIN',
+                'LEFT JOIN',
+                'MIN',
+                'MAX',
+                'NOT',
+                'NULL',
+                'ON',
+                'OR',
+                'OUTER',
+                'UPDATE',
+                'ORDER BY',
+                'SELECT',
+                'TOP',
+                'RIGHT JOIN',
+                'UNION',
+                'WHERE'
+            ]);
+
+            // Define the variables
+            sql = styleSqlWord(sql, '@([a-zA-Z]+)', 'variable');
+            // Define the operators
+            sql = styleSqlWord(sql, '( \= )|( \+ )|( \- )|( \< )|( \> )', 'operator');
+            // Define the numbers
+            sql = styleSqlWord(sql, '[0-9][0-9]*', 'number');
+            // Define the comments
+            //sql = styleSqlWord(sql, '\/\*(.*?)\*\/', 'comment'); // Turned off because it slows down the process too much
+            console.log(sql);
+
+            return sql;
+        };
+
+        /**
+         * Replace the given words in the string.
+         * @param string
+         * @param words
+         * @returns {*}
+         */
+        replaceWordsInString = function(string, words) {
+            angular.forEach(words, function(word) {
+                string = replaceSqlWord(string, word);
+            }, null);
+
+            return string;
+        };
+
+        /**
+         * Replace a word in a string including the sql wrapper.
+         * @param string
+         * @param word
+         * @returns {*|void|XML}
+         */
+        replaceSqlWord = function(string, word) {
+            var regExp = new RegExp('\\b' + word + '\\b', 'gi');
+            return string.replace(regExp, wrapSql(word));
+        };
+
+        /**
+         * Style certain words with a certain class name.
+         * @param string
+         * @param regexp
+         * @param type
+         * @returns {*}
+         */
+        styleSqlWord = function(string, regexp, type) {
+            // Get all words that match the regexp
+            var matches = string.match(new RegExp(regexp, 'gi'));
+            console.log(matches);
+            angular.forEach(matches, function(word) {
+                console.log(word);
+
+                // Escape the word so it will not interfere with the regexp
+                var wordEscaped = word.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+
+                // Replace the word with the span
+                string = string.replace(new RegExp(wordEscaped, 'gi'), wrapSql(word, type));
+            }, null);
+
+            return string;
+        };
+
+        /**
+         * Get the wrapper for SQL keywords.
+         * @param word
+         * @param type of sql variable
+         * @returns {string}
+         */
+        wrapSql = function(word, type) {
+            type = typeof type !== 'undefined' ? type : 'keyword';
+            return '<span class="token ' + type + '">' + word + '</span>';
         };
 
 
