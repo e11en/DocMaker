@@ -14,7 +14,6 @@
             console.log('Creating document');
 
             buildBase(docObject.documentTitle);
-            buildHeader(docObject.documentTitle);
             buildGeneralInfo(docObject.documentRelationImage, docObject.documentIntro);
             buildTables(docObject.tables);
             buildQueries(docObject.queries);
@@ -40,7 +39,7 @@
          * Create the markdown header.
          */
         buildBase = function(title) {
-            var base = '+++\r\ndate = "' + DateTime.now() + '"\r\ntitle = ' + title + '\r\ndraft = false\r\n\r\n+++';
+            var base = '+++\r\ndate = "' + new Date().toISOString() + '"\r\ntitle = ' + title + '\r\ndraft = false\r\n\r\n+++\r\n';
             addToDocument(base);
         };
 
@@ -171,7 +170,7 @@
             angular.forEach(queries, function(query, key) {
                 result += '<h3>' + query.Title +'</h3>';
                 result += '<table border="1"><tr>';
-                result += '<td><pre><code class="language-sql">' + processSQL(query.Body) + '</code></pre></td>';
+                result += '<td><pre><code class="language-sql">' + query.Body + '</code></pre></td>';
                 result += '</tr></table>';
             }, null);
 
