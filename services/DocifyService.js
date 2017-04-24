@@ -90,7 +90,7 @@
          */
         buildGeneralInfo = function(relationImage, documentIntro){
             var header = '<h2>Algemeen</h2>';
-            var image = '<img src="' + relationImage +'" />';
+            var image = relationImage.length > 0 ? '<img class="header-img" src="' + relationImage +'" />' : '';
             var intro = '<p>' + documentIntro +'</p>';
             addToDocument([header, image, intro]);
         };
@@ -100,6 +100,8 @@
          * @param tables
          */
         buildTables = function(tables) {
+            if(tables.length < 1) return;
+
             var header = '<h2>Tabellen uitleg</h2>';
             var tablesHtml = '';
             angular.forEach(tables, function(table, key) {
@@ -205,6 +207,8 @@
          * @param queries
          */
         buildQueries = function(queries) {
+            if(queries.length < 1) return;
+
             var header = '<h2>Handige SQL query\'s</h2>';
             var queryHtml = '';
             angular.forEach(queries, function(query, key) {
