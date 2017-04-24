@@ -1,7 +1,7 @@
 (function() {
   var app = angular.module("docMaker");
 
-  var CreateController = function($scope, $http, FileSaver, Blob, markdownify) {
+  var CreateController = function($scope, $http, FileSaver, Blob, docify, markdownify) {
 
     $scope.addTable = function() {
         $scope.document.tables.push({
@@ -51,20 +51,43 @@
         $scope.document.queries.splice(index, 1);
     };
 
-    $scope.createDocument = function() {
-        $scope.document.output = markdownify.process($scope.document);
-        console.log($scope.document.output);
+    $scope.downloadDocument = function(type) {
+        // TODO: Do validation
 
-        saveFile($scope.document.output, $scope.document.documentTitle.toLowerCase() + '.md');
-        // console.log($scope.document.dataUri);
-        //
-        // $http.post("http://localhost:57982/api/document/generate",
-        //     { Html : $scope.document.dataUri })
-        //     .then(function success(response) {
-        //         //window.open(response.data);
-        //     }, function error(response) {
-        //         console.log("ERROR! " + response.statusText);
-        //     });
+        switch(type) {
+            case 'word' :
+                downloadWordDocument();
+                break;
+            case 'markdown':
+                downloadMarkDownDocument();
+                break;
+        }
+    };
+
+    downloadMarkDownDocument =  function() {
+        $scope.document.output = markdownify.process($scope.document);
+        saveFile($scope.document.output, getMdFileName($scope.document.documentTitle));
+    };
+
+    downloadWordDocument = function() {
+        $scope.document.output = docify.process($scope.document);
+
+        $http.post("http://localhost:57982/api/document/generate",
+            { Html : $scope.document.output })
+            .then(function success(response) {
+                window.open(response.data);
+            }, function error(response) {
+                console.log("ERROR! " + response.statusText);
+            });
+    };
+
+      /**
+       * Concat the name with dashes and add the .md extension.
+       * @param fileName
+       * @returns {string}
+       */
+    getMdFileName = function(fileName) {
+        return fileName.toLowerCase().replace(/\s+/g,"-") + '.md';
     };
 
     saveFile = function(content, outputFile) {
@@ -113,32 +136,80 @@
     $scope.document.documentRelationImage = '';
 
     // TODO: Remove this dummy data
-    $scope.document.documentTitle = "Organization";
-    $scope.document.documentIntro = "Dit is een organization die dingen doet.";
+    $scope.document.documentTitle = "Organization Contract Relatie";
+    $scope.document.documentIntro = "Een organization kan meerdere contracten hebben voor verschillende adressen en verschillende types zoals elektriciteit of gas. Een contract kan het ContractType van ‘Customer’ hebben, dit betekend dat het om een Hoofdaansluiting gaat. Een ‘Period’ contract is een sub-aansluiting en is ook niet direct gekoppeld aan een organization.";
     $scope.document.tables = [
         {
-            Name: 'tbl_Organization',
+            Name: 'itbl_Organization_Contract',
             Image : '',
             Columns: [
                 {
-                    Name: 'OrganizationId',
+                    Name: 'OrganiztionContractId',
                     IsMainIdentifier: true,
                     Body: ''
                 },
                 {
-                    Name: 'Test',
+                    Name: 'OrganizationId',
                     IsMainIdentifier: false,
-                    Body: 'Dit is een andere kolom'
+                    Body: 'Identifier over welke organization het gaat en is gekoppeld met tbl_Organization.'
+                },
+                {
+                    Name: 'ContractId',
+                    IsMainIdentifier: false,
+                    Body: 'Identifier over welk contract het gaat en is gekoppeld met tbl_Contract.'
                 }
             ],
             HasUserNameModifiedColumn : true,
-            HasTransStartDateColumn : true
+            HasValidStartDate : true,
+            HasValidEndDate : true,
+            HasTransStartDateColumn : true,
+            HasHistoryTable : true
+        },
+        {
+            Name: 'tbl_Contract',
+            Image : '',
+            Columns: [
+                {
+                    Name: 'ContractId',
+                    IsMainIdentifier: true,
+                    Body: ''
+                },
+                {
+                    Name: 'ContractType',
+                    IsMainIdentifier: false,
+                    Body: 'Dit kan de waarden ‘Customer’ of ‘Period’ bevatten en geeft aan of het een hoofd- of sub aansluiting is.'
+                },
+                {
+                    Name: 'ContractReference',
+                    IsMainIdentifier: false,
+                    Body: 'Deze waarden wordt automatisch geset zodra er een nieuw contract wordt ingevoerd.'
+                },
+                {
+                    Name: 'ProductId',
+                    IsMainIdentifier: false,
+                    Body: 'Identifier over welk product het gaat en is gekoppeld met tbl_Product.'
+                },
+                {
+                    Name: 'StartDate',
+                    IsMainIdentifier: false,
+                    Body: 'De start datum van het contract.'
+                },
+                {
+                    Name: 'EndDate',
+                    IsMainIdentifier: false,
+                    Body: 'De eind datum van het contract.'
+                }
+            ],
+            HasUserCommentColumn : true,
+            HasUserNameModifiedColumn : true,
+            HasTransStartDateColumn : true,
+            HasHistoryTable : true
         }
-        ];
+    ];
     $scope.document.queries = [
         {
-            Title : 'Toon alle organizations',
-            Body : 'select * FROM Organization'
+            Title : 'Alle contracten van een organization',
+            Body : '/* Show all valid contracts of an organization */ \r\nDECLARE @Viewdata DATETIME = GETDATE() \r\nDECLARE @ViewOrganizationId INT = 25397 \r\nSELECT	org.OrganizationId, \r\norg.Name,\r\nc.ContractType,\r\nc.ContractReference,\r\np.Description,\r\nioc.ValidStartDate,\r\nioc.ValidEndDate\r\nFROM tbl_Organization org\r\nJOIN itbl_Organization_Contract ioc ON ioc.OrganizationId = org.OrganizationId\r\nJOIN tbl_Contract c ON ioc.ContractId = c.ContractId\r\nJOIN mtbl_Product p ON p.ProductId = c.ProductId\r\nWHERE org.OrganizationId = @ViewOrganizationId\r\nAND ioc.ValidEndDate > @Viewdata'
         }
     ];
 
